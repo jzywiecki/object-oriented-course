@@ -1,6 +1,8 @@
 package agh.ics.oop;
 
 public class World {
+    public static final Vector2d LOWER_BOUND = new Vector2d(0, 0);
+    public static final Vector2d UPPER_BOUND = new Vector2d(4, 4);
     public static MoveDirection[] change(String[] directions){
        MoveDirection[] directions_enum = new MoveDirection[directions.length];
         for (int i = 0; i < directions.length; i++){
@@ -23,24 +25,13 @@ public class World {
                 case LEFT     -> System.out.println("Zwierzak skręca w lewo");
             }
         }
-
     }
 
     public static void main(String[] args){
-        System.out.println("System wystartował");
-        Animal animal = new Animal();
-        System.out.println(animal);
-        animal.move(MoveDirection.RIGHT);
-        animal.move(MoveDirection.FORWARD);
-        animal.move(MoveDirection.FORWARD);
-        animal.move(MoveDirection.FORWARD);
-        System.out.println(animal);
-
-        for (MoveDirection direction: OptionsParser.parse(args)){
-            animal.move(direction);
-            System.out.println(direction);
-        }
-        System.out.println(animal);
-        System.out.println("System zakończył działanie");
+        MoveDirection[] directions = new OptionsParser().parse(args);
+        IWorldMap map = new RectangularMap(10, 5);
+        Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
+        IEngine engine = new SimulationEngine(directions, map, positions);
+        engine.run();
     }
 }
