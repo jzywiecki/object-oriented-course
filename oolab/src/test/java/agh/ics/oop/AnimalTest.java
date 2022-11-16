@@ -10,12 +10,13 @@ public class AnimalTest {
     public void orientationTest(){
         //this test checks if animal has proper orientation
         //given
+        IWorldMap map = new RectangularMap(5, 5);
         String[] inputString1 = new String[]{"r", "r", "r", "r", "r"};
         String[] inputString2 = new String[]{"l", "l", "l", "l", "l"};
         MoveDirection[] input1 = OptionsParser.parse(inputString1);
         MoveDirection[] input2 = OptionsParser.parse(inputString2);
-        Animal animal1 = new Animal();
-        Animal animal2 = new Animal();
+        Animal animal1 = new Animal(map);
+        Animal animal2 = new Animal(map);
 
         //when
         for (MoveDirection direction: input1){
@@ -37,12 +38,13 @@ public class AnimalTest {
     public void positionTest(){
         //this test checks if animal has proper position
         //given
+        IWorldMap map = new RectangularMap(5, 5);
         String[] inputString1 = new String[]{"f", "f", "l", "b", "r", "b"};
         String[] inputString2 = new String[]{"b", "l", "b", "r", "f", "f"};
         MoveDirection[] input1 = OptionsParser.parse(inputString1);
         MoveDirection[] input2 = OptionsParser.parse(inputString2);
-        Animal animal1 = new Animal();
-        Animal animal2 = new Animal();
+        Animal animal1 = new Animal(map);
+        Animal animal2 = new Animal(map);
 
         //when
         for (MoveDirection direction: input1){
@@ -65,6 +67,7 @@ public class AnimalTest {
     public void mapTest(){
         //this test checks if animal can go out of map boundaries
         //given
+        IWorldMap map = new RectangularMap(5, 5);
         String[] inputString1 = new String[]{"f", "f", "f", "r", "f", "f", "f"};
         String[] inputString2 = new String[]{"l", "f", "f", "f", "r", "f", "f", "f"};
         String[] inputString3 = new String[]{"r", "f", "f", "f", "r", "f", "f", "f"};
@@ -73,10 +76,10 @@ public class AnimalTest {
         MoveDirection[] input2 = OptionsParser.parse(inputString2);
         MoveDirection[] input3 = OptionsParser.parse(inputString3);
         MoveDirection[] input4 = OptionsParser.parse(inputString4);
-        Animal animal1 = new Animal();
-        Animal animal2 = new Animal();
-        Animal animal3 = new Animal();
-        Animal animal4 = new Animal();
+        Animal animal1 = new Animal(map);
+        Animal animal2 = new Animal(map);
+        Animal animal3 = new Animal(map);
+        Animal animal4 = new Animal(map);
 
         //when
         for (MoveDirection direction: input1){
