@@ -28,4 +28,5 @@ public class RectangularMap extends AbstractWorldMap{
     public Vector2d calculateUpperRight(){
         return new Vector2d(width-1, height-1);
     }
+
 }
