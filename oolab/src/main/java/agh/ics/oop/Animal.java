@@ -8,19 +8,15 @@ public class Animal {
     private IWorldMap map;
 
 //    public Animal(){ //its not required, I had to slightly change tests to addapt to the new constructors
-//        orientation = MapDirection.NORTH;
-//        position = new Vector2d(2, 2);
+//        this(null);
 //    }
+
     public Animal(IWorldMap map){
-        this.map = map;
-        orientation = MapDirection.NORTH;
-        position = new Vector2d(2, 2);
+        this(map, new Vector2d(2, 2), MapDirection.NORTH);
     }
 
     public Animal(IWorldMap map, Vector2d initialPosition){
-        this.map = map;
-        orientation = MapDirection.NORTH;
-        position = new Vector2d(initialPosition.x, initialPosition.y);
+        this(map, new Vector2d(initialPosition.x, initialPosition.y), MapDirection.NORTH);
     }
 
     public Animal(IWorldMap map, Vector2d initialPosition, MapDirection orientation){
