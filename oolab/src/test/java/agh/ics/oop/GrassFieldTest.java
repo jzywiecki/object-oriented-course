@@ -42,7 +42,6 @@ class GrassFieldTest {
 
         //then
         assertAll(
-                () -> assertFalse(map1.place(animal1)),
                 () -> assertTrue(map1.place(animal2)),
                 () -> assertTrue(map1.place(animal3))
         );
