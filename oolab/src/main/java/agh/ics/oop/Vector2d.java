@@ -1,5 +1,7 @@
 package agh.ics.oop;
 
+import java.util.Objects;
+
 public class Vector2d {
     public final int x;
     public final int y;
@@ -51,11 +53,7 @@ public class Vector2d {
 
     @Override
     public int hashCode() {
-        //"pattern as Josh Bloch suggests in Effective Java" ~ Stackoverflow.
-        int hash = 17;
-        hash = hash * 31 + this.x;
-        hash = hash * 31 + this.y;
-        return hash;
+        return Objects.hash(this.x, this.y);
     }
 
     @Override
