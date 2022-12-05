@@ -35,35 +35,11 @@ public class GrassField extends AbstractWorldMap{
     }
 
     public Vector2d calculateLowerLeft(){
-//        Vector2d lowLeft = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE); //I prefer to have [0, 0] in my output as  a reference point, here we could build map only with animal position when there is no grass
-//        Vector2d[] animalsPosition = getAnimals().keySet().toArray(new Vector2d[0]);
-//        Vector2d[] grassesPosition = getGrasses().keySet().toArray(new Vector2d[0]);
-//        for (Vector2d vector : animalsPosition) {
-//            lowLeft = lowLeft.lowerLeft(vector);
-//        }
-//        for (Vector2d vector : grassesPosition) {
-//            lowLeft = lowLeft.lowerLeft(vector);
-//        }
-//        return lowLeft;
         return boundries.getLowerLeft();
     }
 
     public Vector2d calculateUpperRight(){
-//        Vector2d topRight = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
-//        Vector2d[] animalsPosition = getAnimals().keySet().toArray(new Vector2d[0]);
-//        Vector2d[] grassesPosition = getGrasses().keySet().toArray(new Vector2d[0]);
-//        for (Vector2d vector : animalsPosition) {
-//            topRight = topRight.upperRight(vector);
-//        }
-//        for (Vector2d vector : grassesPosition) {
-//            topRight = topRight.upperRight(vector);
-//        }
-//        return topRight;
         return boundries.getUpperRight();
-    }
-
-    public Map<Vector2d, Grass> getGrasses() {
-        return grasses;
     }
 
 }

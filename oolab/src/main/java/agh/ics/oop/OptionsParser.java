@@ -1,6 +1,5 @@
 package agh.ics.oop;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class OptionsParser {
@@ -26,7 +25,7 @@ public class OptionsParser {
                     output[i] = MoveDirection.LEFT;
                     countValidInput += 1;
                 }
-                default -> {throw new IllegalArgumentException(input[i] + " is not legal move specification.");}
+                default -> throw new IllegalArgumentException(input[i] + " is not legal move specification.");
             }
 
         }
