@@ -2,24 +2,81 @@ package agh.ics.oop.gui;
 
 import agh.ics.oop.*;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import java.io.FileNotFoundException;
 
-import java.util.List;
 
-public class App extends Application {
+public class App extends Application implements IGuiObserver{
     AbstractWorldMap map;
+    private Stage stage;
+    private Button button;
+    private TextField textField;
+    private MoveDirection[] directions;
+
+
 
     @Override
     public void start(Stage primaryStage){
+        stage = primaryStage;
+        stage.setTitle("World");
+
+        showMenu();
+        buttonClick();
+    }
+
+    private void showMenu() {
+        VBox vBox = new VBox();
+        Label label = new Label("Type arguments");
+        label.setPrefHeight(50);
+        textField = new TextField();
+        textField.setPrefHeight(50);
+        button = new Button("START SIMULATION");
+        Label emptySpace = new Label("");
+        vBox.getChildren().addAll(label, textField, emptySpace, button);
+        vBox.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(vBox, 400, 400);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private void buttonClick() {
+        button.setOnAction(action -> {
+            try {
+                if (textField.getText().length() > 0) {
+                    OptionsParser optionsParser = new OptionsParser();
+                     directions = optionsParser.parse(textField.getText().split(" "));
+                }
+                map = new GrassField(10);
+                Vector2d[] positions = {new Vector2d(2, 2), new Vector2d(3, 4)};
+                SimulationEngine engine = new SimulationEngine(directions, map, positions);
+                updateScene();
+                engine.addObserver(this);
+                Thread thread = new Thread(engine);
+                thread.start();
+            }catch (IllegalArgumentException exception) {
+                System.out.println(exception.getMessage());
+            }
+        });
+    }
+
+
+
+
+    private void updateScene(){
         GridPane gridPane = new GridPane();
         gridPane.setGridLinesVisible(true);
-        Label label = new Label("Zwierzak");
+        Label label;
         Scene scene = new Scene(gridPane, 600, 600);
         int xLeft = map.calculateLowerLeft().x;
         int xRight = map.calculateUpperRight().x;
@@ -54,32 +111,35 @@ public class App extends Application {
                 Vector2d pos = new Vector2d(i, j);
                 if (map.isOccupied(pos)){
                     var obj = map.objectAt(pos);
-                    label = new Label(obj.toString());
-
-                    gridPane.add(label, i + 1 - xLeft, yRight - j + 1 );
-                    GridPane.setHalignment(label, HPos.CENTER);
+                    GuiElementBox guiElementBox;
+                    try {
+                        guiElementBox = new GuiElementBox(obj, pos);
+                    } catch (FileNotFoundException exception) {
+                        throw new RuntimeException(exception);
+                    }
+                    VBox vbox = guiElementBox.getContent();
+                    gridPane.add(vbox, i + 1 - xLeft, yRight - j + 1 );
+                    GridPane.setHalignment(vbox, HPos.CENTER);
                 }
             }
         }
 
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.setScene(scene);
+        stage.show();
     }
 
-    @Override
-    public void init() throws IllegalArgumentException {
-        try {
-            List<String> list = getParameters().getRaw();
-            String[] array = new String[list.size()];
-            for(int i = 0; i < list.size(); i++) array[i] = list.get(i);
-            MoveDirection[] directions = new OptionsParser().parse(array);
-            map = new GrassField(10);
-            Vector2d[] positions = {new Vector2d(2, 2), new Vector2d(3, 4)};
-            IEngine engine = new SimulationEngine(directions, map, positions);
-            engine.run();
 
-        }catch (IllegalArgumentException exception) {
-            System.out.println(exception);
+
+    @Override
+    public void positionChanged() {
+        try {
+            Platform.runLater(()->{
+                updateScene();
+                System.out.println("Moved animal");
+            });
+            Thread.sleep(500);
+        } catch (InterruptedException exception) {
+            System.out.println(exception.getMessage());
         }
     }
 }

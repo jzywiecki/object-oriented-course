@@ -5,7 +5,7 @@ import java.util.TreeSet;
 import java.util.Comparator;
 
 public class MapBoundary implements IPositionChangeObserver {
-    private SortedSet<Vector2d> xSet = new TreeSet<>(Comparator.comparingInt(point -> point.x)); //because we need total order
+    private SortedSet<Vector2d> xSet = new TreeSet<>((Comparator.comparingInt(point -> point.x))); //because we need total order
     private SortedSet<Vector2d> ySet = new TreeSet<>(Comparator.comparingInt(point -> point.y));
 
     @Override

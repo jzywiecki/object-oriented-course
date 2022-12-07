@@ -46,6 +46,8 @@ public class Animal {
         };
     }
 
+
+
     public boolean isAt(Vector2d positionToCheck){
         return Objects.equals(this.position, positionToCheck);
     }
@@ -69,9 +71,6 @@ public class Animal {
 
     void addObserver(IPositionChangeObserver observer) {
         observers.add(observer);
-    }
-    void removeObserver(IPositionChangeObserver observer) {
-        observers.remove(observer);
     }
 
     void positionChanged(Vector2d oldPosition, Vector2d newPosition){
