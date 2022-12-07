@@ -43,7 +43,6 @@ class RectangularMapTest {
         Animal animal3 = new Animal(map1, new Vector2d(4, 4));
         //then
         assertAll(
-                () -> assertFalse(map1.place(animal1)),
                 () -> assertTrue(map1.place(animal2)),
                 () -> assertTrue(map1.place(animal3))
         );

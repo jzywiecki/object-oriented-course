@@ -15,7 +15,7 @@ public class Animal {
 
     public Animal(IWorldMap map, Vector2d initialPosition){
         this(map, new Vector2d(initialPosition.x, initialPosition.y), MapDirection.NORTH);
-        addObserver((IPositionChangeObserver) map);
+        addObserver(map);
     }
 
     public Animal(IWorldMap map, Vector2d initialPosition, MapDirection orientation){
@@ -24,7 +24,7 @@ public class Animal {
         this.map = map;
         this.position = new Vector2d(initialPosition.x, initialPosition.y);
         this.orientation = orientation;
-        addObserver((IPositionChangeObserver) map);
+        addObserver(map);
     }
 
     public MapDirection getOrientation() {
